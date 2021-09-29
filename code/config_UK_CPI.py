@@ -13,11 +13,11 @@ NOTE: There is no gurantee that every combination of settings will execute witho
 """
 
 # paths
-main_path        = 'X:\\your\\path\\'
-data_path        = main_path+'data\\'    # data dir
-code_path        = main_path+'code\\'    # code dir
-out_path         = main_path+'results\\' # output dir
-fig_path         = main_path+'figures\\' # figure output dir
+main_path        = '/Users/zaherma/PycharmProjects/ML_projection_toolbox/'
+data_path        = main_path+'data/'    # data dir
+code_path        = main_path+'code/'    # code dir
+out_path         = main_path+'results/' # output dir
+fig_path         = main_path+'figures/' # figure output dir
 
 # DATA
 # ----

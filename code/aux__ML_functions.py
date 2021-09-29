@@ -213,13 +213,13 @@ def ML_train_tester(df,target,features,method,m_test=1,n_boot=500,is_class=False
     # verbose
     ID = target+'-'+method+'-'+str(m_test)+'-'+str(n_boot)
     if verbose==True:
-        print '\nTraining Summary'
-        print 'ID:',ID
-        print '\tin-sample error:',round(train_error,3)
-        print '\tout-of-sample error:',round(test_error,3)
-        print '\terror variance:',round(np.std(boot_errors,ddof=1),3)
-        print '\terror signal-to-noise:',
-        print round(test_error/np.std(boot_errors,ddof=1),3)
+        print ('\nTraining Summary')
+        print ('ID:',ID)
+        print ('\tin-sample error:',round(train_error,3))
+        print ('\tout-of-sample error:',round(test_error,3))
+        print ('\terror variance:',round(np.std(boot_errors,ddof=1),3))
+        print ('\terror signal-to-noise:',)
+        print (round(test_error/np.std(boot_errors,ddof=1),3))
     
     # package output
     out_dict = {'ID' : ID,\
@@ -434,7 +434,7 @@ def eval_model_ensemble(models,x,y_ref=None,is_class=False,verbose=False):
         else: # classification problem
             y_err = np.mean(np.abs(y_pred!=y_ref))
         if verbose==True:
-            print '\nMean model error: {0}.'.format(np.round(y_err,2))
+            print ('\nMean model error: {0}.'.format(np.round(y_err,2)))
         return [y_pred, y_err]
     
     
@@ -510,12 +510,12 @@ def prec_rec_F1(target,prediction,use_df=False,df=None,df_start=0,df_end=1,\
     
     # print results
     if verbose==True:
-        print '\nBinary Classification Stats (%)'
-        print 'ID: {0}\n'.format(ID)
-        print '\taccuracy  : {0}'.format(np.round(acc,  digits))
-        print '\tprecision : {0}'.format(np.round(prec, digits))
-        print '\trecall    : {0}'.format(np.round(rec,  digits))
-        print '\tF-1 score : {0}.\n'.format(np.round(F1,   digits))
+        print ('\nBinary Classification Stats (%)')
+        print ('ID: {0}\n'.format(ID))
+        print ('\taccuracy  : {0}'.format(np.round(acc,  digits)))
+        print ('\tprecision : {0}'.format(np.round(prec, digits)))
+        print ('\trecall    : {0}'.format(np.round(rec,  digits)))
+        print ('\tF-1 score : {0}.\n'.format(np.round(F1,   digits)))
     return prec,rec,F1
     
 
@@ -586,13 +586,13 @@ def bias_var_sd_R2(target,prediction,use_df=False,df=None,\
     
     # print results
     if verbose==True:
-        print '\nBias-Var-Std-R2 Stats'
-        print 'ID:', ID
-        print '\tBias      : {0}'.format(np.round(Bias,  digits))
-        print '\tVariance  : {0}'.format(np.round(Var,   digits))
-        print '\tStd. dev. : {0}'.format(np.round(Std,   digits))
-        print '\tPearson-r : {0}'.format(np.round(Corr,  digits))
-        print '\tR-squared : {0}.\n'.format(np.round(R2, digits))
+        print ('\nBias-Var-Std-R2 Stats')
+        print ('ID:', ID)
+        print ('\tBias      : {0}'.format(np.round(Bias,  digits)))
+        print ('\tVariance  : {0}'.format(np.round(Var,   digits)))
+        print ('\tStd. dev. : {0}'.format(np.round(Std,   digits)))
+        print ('\tPearson-r : {0}'.format(np.round(Corr,  digits)))
+        print ('\tR-squared : {0}.\n'.format(np.round(R2, digits)))
     return Bias, Var, Std, R2
         
 

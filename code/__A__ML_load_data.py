@@ -12,26 +12,26 @@ from __main__ import config,data_func,pd,np,time,pat
 
 time_stamp = time.strftime('%Y-%m-%d %H:%M:%S')
 
-# print settings to screen
-print '\n\n'
-print '    =================================='
-print '    ||   MACHINE LEARNING WRAPPER   ||'
-print '    ||   for projection analyses    ||' 
-print '    ==================================\n'
+# print( settings to screen
+print( '\n\n')
+print( '    ==================================')
+print( '    ||   MACHINE LEARNING WRAPPER   ||')
+print( '    ||   for projection analyses    ||' )
+print( '    ==================================\n')
 
-print 'Application: {0}\n'.format(config.application)
-print 'time: {0}\n'.format(time_stamp)
-print '\nProgram settings\n----------------\n'
-print '\ttarget             : {0}'.format(config.target)
-print '\tmethod             : {0}'.format(config.method)
-print '\thorizon            : {0} ({1})'.format(config.horizon,config.unit)
-print '\tbootstraps         : {0}'.format(config.n_boot)
-print '\ttest fraction      : {0}'.format(config.test_fraction)
-print '\tdata period        : {0} - {1}'.format(config.start_time,config.end_time)
-print '\tinit. train period : {0} ({1})'.format(config.init_train_period,config.unit)
-print '\ttime step size     : {0} ({1})'.format(config.time_step_size,config.unit)
-print '\tfixed window       : {0}'.format(config.fixed_start)
-print '\tdata description   : {0}\n'.format(config.description)
+print( 'Application: {0}\n'.format(config.application))
+print( 'time: {0}\n'.format(time_stamp))
+print( '\nProgram settings\n----------------\n')
+print( '\ttarget             : {0}'.format(config.target))
+print( '\tmethod             : {0}'.format(config.method))
+print( '\thorizon            : {0} ({1})'.format(config.horizon,config.unit))
+print( '\tbootstraps         : {0}'.format(config.n_boot))
+print( '\ttest fraction      : {0}'.format(config.test_fraction))
+print( '\tdata period        : {0} - {1}'.format(config.start_time,config.end_time))
+print( '\tinit. train period : {0} ({1})'.format(config.init_train_period,config.unit))
+print( '\ttime step size     : {0} ({1})'.format(config.time_step_size,config.unit))
+print( '\tfixed window       : {0}'.format(config.fixed_start))
+print( '\tdata description   : {0}\n'.format(config.description))
 
 
 #%% load data and transformations
@@ -89,7 +89,7 @@ data_shifted = data_func.data_framer(data=raw_data.copy(),target=config.target,f
 # number of observations trasining data length
 M = len(data_shifted)
 if M<10: # thin dataset warning
-    print 'Warning: Dataset has less than 20 observations.\n'
+    print( 'Warning: Dataset has less than 20 observations.\n')
 
 if config.init_train_period==0: # use full data set from the start
     config.init_train_period = M
@@ -105,4 +105,4 @@ ID_long   = ID_short+'_fixedStart-{0}_trainStartPeriod-{1}_{2}'.format(config.fi
 ID_long  += '_crossVal-{0}_fullDataCV-{1}_{2}'.format(config.CV_name,config.CV_at_last,config.name_add)
 ID_short += '_date-{0}_{1}'.format(time_stamp[:10],config.name_add)
 
-print '\nData loaded successfully.\n'
+print( '\nData loaded successfully.\n')

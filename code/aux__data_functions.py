@@ -159,7 +159,7 @@ def data_framer(data,target,features='all',index=None,start_i=None,end_i=None,sh
         try:
             iS = list(data.index).index(start_i)
         except ValueError:
-            print 'Value or type of given start index value not matching index.'
+            print ('Value or type of given start index value not matching index.')
             
     if end_i==None:
         iE = len(data.index)
@@ -167,7 +167,7 @@ def data_framer(data,target,features='all',index=None,start_i=None,end_i=None,sh
         try:
             iE = list(data.index).index(end_i)
         except ValueError:
-            print 'Value or type of given end index value not matching index.'
+            print ('Value or type of given end index value not matching index.')
     
     # set feature variable
     if type(features)==str and not features=='all':
@@ -226,12 +226,12 @@ def data_framer(data,target,features='all',index=None,start_i=None,end_i=None,sh
             data_new.to_excel(out_name,out_sheet)
     # print summary stats of new data
     if print_summary==True:
-        print '\nData summary:'
-        print data_new.describe()
+        print ('\nData summary:')
+        print (data_new.describe())
     # output correlation structure of new data
     if corr_matrix==True:
-        print '\nData correlations matrix:'
-        print data_new.corr()
+        print ('\nData correlations matrix:')
+        print (data_new.corr())
     # plot new data
     if plot_data==True:
         df_plot = data_new.plot(lw=2)

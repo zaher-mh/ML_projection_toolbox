@@ -13,8 +13,8 @@ from __main__ import config,data_func,ml_func,data,np,pd,pk,time
 from __main__ import case # can be removed if no separated cases are given in the main file
 
 # print settings
-print '\nProjections: time series training & testing:'
-print '--------------------------------------------\n'
+print ('\nProjections: time series training & testing:')
+print ('--------------------------------------------\n')
 
 save_name  = config.out_path+'Projections_summary_'+data.ID_short # name used for in/output
 
@@ -26,18 +26,18 @@ end_times  = end_times[np.arange(0,len(end_times),config.time_step_size)] # adju
 # ---------------------------------------------------------------
 if not data.data_shifted.index[-1] in end_times: # force data end point to be included
     end_times = np.hstack((end_times,data.data_shifted.index[-1]))
-    print '\tWarning: Final observation not included in series of training sets.'
-    print '\t\tTraining period has been extended to include it\n'
+    print ('\tWarning: Final observation not included in series of training sets.')
+    print ('\t\tTraining period has been extended to include it\n')
 if len(end_times)>1 and config.fixed_start==False:
     if config.init_train_period<10:
-        print '\tWarning: Sliding window length has less than 20 observations.\n'
+        print ('\tWarning: Sliding window length has less than 20 observations.\n')
     if int(np.where(data.data_shifted.index==end_times[-1])[0]-\
            np.where(data.data_shifted.index==end_times[-2])[0])<19:
-        print '\tWarning: Last  slice of sliding window has less than 20 observations.'
-        print '\t\tLast slice will be merged with previous slice.\n'
+        print ('\tWarning: Last  slice of sliding window has less than 20 observations.')
+        print ('\t\tLast slice will be merged with previous slice.\n')
         end_times = np.delete(end_times,int(np.where(end_times==end_times[-2])[0]))
 elif len(end_times)==1 and config.fixed_start==False:
-    print '\tWarning: Only one period for sliding window.\n'
+    print ('\tWarning: Only one period for sliding window.\n')
 L_end_time = len(end_times) # number of train/test intervals
 
 
@@ -60,7 +60,7 @@ if config.do_model_fit==True:
     elif case=='UK_CPI':
         # time range for projection period in quarters
         proj_index = pd.date_range(data.data_shifted.index[0], periods=data.M+config.horizon, freq='Q')
-        proj_index = np.char.array(proj_index.year)+'Q'+np.char.array(proj_index.quarter)
+        proj_index = np.apply_along_axis('Q'.join, 0, [proj_index.year.astype("str").tolist(), proj_index.quarter.astype("str").tolist()])
     
     # initialisations for variable importance analysis       
     feat_imp    = np.zeros((L_end_time,len(config.features)))
@@ -68,6 +68,8 @@ if config.do_model_fit==True:
     
     # LOOP over end times (expanding horizon)
     for t,end in enumerate(end_times):
+        print(t,end)
+        print(np.where(proj_index==end)[0])
         i_t     = int(np.where(proj_index==end)[0])
         i_t_hor = i_t+config.horizon
         
@@ -94,7 +96,7 @@ if config.do_model_fit==True:
                                            verbose=config.verbose)
         # return model specification
         if t==0:
-            print '\n\tModel specs:\n\n\t',out_dict['models'][0],'\n'
+            print ('\n\tModel specs:\n\n\t',out_dict['models'][0],'\n')
         
         # get variable importance
         p = ml_func.get_feat_importance(out_dict['feat_weights'])
@@ -121,9 +123,9 @@ if config.do_model_fit==True:
             
             # cross-validation
             if do_CV==True:
-                print '\n\tCross-validation (calibration) of "{0}" via "{1}":'.format(config.method,config.CV_name)
-                print '\t\t{0} values between {1} and {2}.'.format(len(config.CV_values),config.CV_values[0],config.CV_values[-1])
-                print '\t\tDo at last "{0}" over {1} observations.\n'.format(config.CV_at_last,len(df_train))
+                print ('\n\tCross-validation (calibration) of "{0}" via "{1}":'.format(config.method,config.CV_name))
+                print ('\t\t{0} values between {1} and {2}.'.format(len(config.CV_values),config.CV_values[0],config.CV_values[-1]))
+                print ('\t\tDo at last "{0}" over {1} observations.\n'.format(config.CV_at_last,len(df_train)))
                 
                 X_CV     = df_train[config.features].values
                 Y_CV     = df_train[config.target].values
@@ -157,7 +159,7 @@ if config.do_model_fit==True:
             
                 # format results andsave
                 CVdf = pd.DataFrame({'CV values': config.CV_values, 'CV errors': CV_error})
-                print '\n\tCross-Validation results: "{0}"\n\n{1}\n'.format(config.CV_name,CVdf)
+                print ('\n\tCross-Validation results: "{0}"\n\n{1}\n'.format(config.CV_name,CVdf))
                 if config.save_results==True:
                     CV_save_name = config.out_path+'CV_summary_{0}.xlsx'.format(data.ID_short)
                     CVdf.to_excel(CV_save_name,sheet_name=config.method+', '+config.CV_name)
@@ -277,7 +279,7 @@ if config.do_model_fit==True:
         fcast_time = proj_index[i_t_hor]
         fcast_val  = np.round(projections[i_t_hor,2],3)
         if np.isnan(fcast_val)==True:
-            print '\n\tWarning: Time {0} not sampled for testing: return NaN value for projection.'.format(proj_index[i_t])
+            print ('\n\tWarning: Time {0} not sampled for testing: return NaN value for projection.'.format(proj_index[i_t]))
         if config.is_class==True:
             if not np.isnan(fcast_val)==True:
                 fcast_val = int(fcast_val)
@@ -292,14 +294,14 @@ if config.do_model_fit==True:
         mean_train_err = np.nanmean(np.abs(projections[:train_L,4]))
         mean_test_err  = np.nanmean(np.abs(projections[train_L:i_t_hor,4]))
         mean_ref_err   = np.nanmean(np.abs(projections[train_L:i_t_hor,6]))
-        print "\tTraining {0}-{1}, error: {2}; Projection until {3}, model: {4}"\
-                          .format(start,end,np.round(mean_train_err,3),fcast_time,fcast_val),
+        print ("\tTraining {0}-{1}, error: {2}; Projection until {3}, model: {4}"\
+                          .format(start,end,np.round(mean_train_err,3),fcast_time,fcast_val),)
         if i_t_hor+1<=data.M: # error summary
-            print 'actual: {0},\n\t\t\ttest errors: point ({1}), mean to horizon ({2})'.format(y_val,point_err,np.round(mean_test_err,3))
+            print ('actual: {0},\n\t\t\ttest errors: point ({1}), mean to horizon ({2})'.format(y_val,point_err,np.round(mean_test_err,3)))
         if i_t_hor+1==data.M:
-            print '\n\tFuture Projections:\n'
+            print ('\n\tFuture Projections:\n')
         elif i_t_hor+1>data.M:
-            print
+            print()
         
     # record results
     # --------------
@@ -338,26 +340,26 @@ if config.do_model_fit==True:
     
     # time and error summary
     totalT = np.round((time.time()-start_time)/60,2) # elapsed time in minutes
-    print '\nDone in',totalT,'minutes.'
-    print '\nModel errors'
-    print '\tMean','{0: <11}'.format(config.method), 'test error:',np.round(mean_test_err,2)
+    print ('\nDone in',totalT,'minutes.')
+    print ('\nModel errors')
+    print ('\tMean','{0: <11}'.format(config.method), 'test error:',np.round(mean_test_err,2))
     
     if not config.ref_model==None:
-        print '\tMean','{0: <11}'.format(config.ref_model), 'test error:',np.round(mean_ref_err,2),'\n'
+        print ('\tMean','{0: <11}'.format(config.ref_model), 'test error:',np.round(mean_ref_err,2),'\n')
     if config.is_class==True:
         ml_func.prec_rec_F1(out_dict['test_ref_Y'],out_dict['test_pred_Y'],ID=data.ID_short)
-        print '\tNote: OOB error for last training slice.'
+        print ('\tNote: OOB error for last training slice.')
         
 # load pre-computed results
 else:
-    print 'Loading pre-computed results:\n\n\t',data.ID_long,'...',
+    print ('Loading pre-computed results:\n\n\t',data.ID_long,'...',)
     try:
         results_dict = pk.load(open(save_name+'.pkl','rb'))
         if not results_dict['ID']==data.ID_long:
-            print '\n\tResults-ID not matching!'
+            print ('\n\tResults-ID not matching!')
         else:
-            print '\ndone.\n'
+            print ('\ndone.\n')
     except IOError:
-        print "Pre-computed results not found."
+        print ("Pre-computed results not found.")
         
 
