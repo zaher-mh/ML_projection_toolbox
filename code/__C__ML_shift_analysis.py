@@ -12,8 +12,8 @@ from __main__ import config,data_func,ml_func,data,pd,np,time,pk
 
 save_name = config.out_path+'Horizon_analysis_summary_'+data.ID_short
 
-print '\nFeature importance for different lead-lag relations:'
-print '----------------------------------------------------\n'
+print ('\nFeature importance for different lead-lag relations:')
+print ('----------------------------------------------------\n')
 if config.do_model_fit==True:
     start_T = time.time() # for time taking
     
@@ -39,9 +39,9 @@ if config.do_model_fit==True:
         
         # print model specification and progress
         if t==0:
-            print '\tModel specs:\n\n\t',out_dict['models'][0],'\n'
-            print '\tHorizon ({0}):'.format(config.unit),
-        print hor,'..',
+            print ('\tModel specs:\n\n\t',out_dict['models'][0],'\n')
+            print ('\tHorizon ({0}):'.format(config.unit),)
+        print (hor,'..',)
         
         # feature importance & target feature correlations
         p = ml_func.get_feat_importance(out_dict['feat_weights'])
@@ -59,16 +59,16 @@ if config.do_model_fit==True:
     if config.save_results==True:
         pk.dump(feat_imp_dict,open(save_name+'.pkl','wb'))
     totalT = np.round((time.time()-start_T)/60,2) # elapsed time in minutes
-    print  'done.\n\nTime elapsed:',totalT,'minutes.\n\n'
+    print  ('done.\n\nTime elapsed:',totalT,'minutes.\n\n')
 
 # load pre-computed results
 else:
-    print '\nLoading pre-computed results:\n\t',data.ID_long,'...',
+    print ('\nLoading pre-computed results:\n\t',data.ID_long,'...',)
     try:
         feat_imp_dict= pk.load(open(save_name+'.pkl','rb'))
         if not feat_imp_dict['ID']==data.ID_long:
-            print '\n\tResults-ID not matching!'
+            print ('\n\tResults-ID not matching!')
         else:
-            print '\ndone.\n'
+            print ('\ndone.\n')
     except IOError:
-        print "Pre-computed results not found."
+        print ("Pre-computed results not found.")

@@ -187,7 +187,7 @@ if config.do_model_fit==True:
             # loop over bootstrapped models
             test_I  = out_dict['test_ind'] # out-of-bag test indeces
             for i,model in enumerate(models):
-                foutput[i,test_I[i/i_0]==1] = model.predict(X[test_I[i/i_0]==1,:])
+                foutput[i,test_I[i//i_0]==1] = model.predict(X[test_I[i//i_0]==1,:])
             # record modelling stats
             # columns: inflation (0), low p-tile (1), mean forecast (2), high p-tile (3) 
             #          mean error (4), VAR reference (5), VAR error (6)

@@ -13,11 +13,11 @@ NOTE: There is no gurantee that every combination of settings will execute witho
 """
 
 # paths
-main_path        = '/Users/zaherma/PycharmProjects/ML_projection_toolbox/'
-data_path        = main_path+'data/'    # data dir
-code_path        = main_path+'code/'    # code dir
-out_path         = main_path+'results/' # output dir
-fig_path         = main_path+'figures/' # figure output dir
+main_path        = 'C:\\Users\\hibad\\PycharmProjects\\ML_projection_toolbox\\'
+data_path        = main_path+'data\\'    # data dir
+code_path        = main_path+'code\\'    # code dir
+out_path         = main_path+'results\\' # output dir
+fig_path         = main_path+'figures\\' # figure output dir
 
 # DATA
 # ----
@@ -25,7 +25,7 @@ fig_path         = main_path+'figures/' # figure output dir
 application      = 'UK CPI inflation modelling' # short program description
 datafile         = 'UK_DATA_23Jan17' # name of data file
 file_format      = 'xlsx'      # 'csv' (comma separator) or Excel ('xls/x', first sheet)
-description      = 'quarterly macro time series'
+description      = 'monthly macro time series'
 
 # time range
 time_var         = 'date'     # name of time index variable (must be column in 'datafile')
