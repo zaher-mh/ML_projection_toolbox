@@ -1,6 +1,7 @@
 
 MACHINE LEARNING WRAPPER for projection analyses
 ------------------------------------------------
+Python 3.7 Porting
 
 Simple Python (2.7) wrapper for machine learning models in the context of lead-lag projection modelling
 
@@ -35,6 +36,7 @@ Quick guide:
 	1. download zipped repository (green ''Clone or download'' button)
 	2. unpack into desired project directory
 	3. set this directory as **main_path** in **config_XXX.py**
+	3bis. Install requirements in requirements.txt `pip3 install -r requirements.txt`
 	4. make sure that the **code** sub-directory is on your Python path 
 	5. optional: customisation (model selection, time horizon, bootstraps, etc.)
 	6. run **__A__ML_main.py**: Triggers sequence of other scripts to be run. 
