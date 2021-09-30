@@ -68,8 +68,6 @@ if config.do_model_fit==True:
     
     # LOOP over end times (expanding horizon)
     for t,end in enumerate(end_times):
-        print(t,end)
-        print(np.where(proj_index==end)[0])
         i_t     = int(np.where(proj_index==end)[0])
         i_t_hor = i_t+config.horizon
         

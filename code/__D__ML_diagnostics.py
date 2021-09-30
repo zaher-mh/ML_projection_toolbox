@@ -112,12 +112,18 @@ if config.do_projections==True:
         
         # go one horizon length back and into the future  
         proj_dates       = pro.projections.index.values
-        x_dates, y_dates = proj_dates[-3*config.horizon-1:-config.horizon], proj_dates[-2*config.horizon-1:]   
+        print(proj_dates)
+        x_dates, y_dates = proj_dates[-3*config.horizon-1:-config.horizon], proj_dates[-2*config.horizon-1:]
+        print(x_dates)
+        print(y_dates)
         df_X             = data.data_no_shift[config.features].loc[x_dates]
         df_X.index       = proj_dates[-2*config.horizon-1:] # shift index to prediction period
         df_Y             = data_func.data_framer(data.raw_data,config.target,config.features,index=config.time_var,\
                                                  start_i=config.start_time,end_i='2016Q4',\
-                                                 shift=0,trafos=data.trafos,name_trafo=False).loc[y_dates]
+                                                 shift=0,trafos=data.trafos,name_trafo=False)
+
+        print(df_Y)
+        print(df_Y.loc[y_dates])
         
         # plot
         ml_plot.cond_fan_chart(df_X,df_Y,models,ref_time,h_ref_line=ref_line,cond=cond,\

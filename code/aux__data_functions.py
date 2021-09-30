@@ -185,9 +185,11 @@ def data_framer(data,target,features='all',index=None,start_i=None,end_i=None,sh
     
     # initiate new output dataframe
     data_new        = pd.DataFrame(columns=[index])
+    print(data.index.values)
+    print(data.index[iS:iE+1].values)
     data_new[index] = np.array(data.index[iS:iE+1])
     data_new.set_index(index, inplace=True)
-    
+
     # get, slice and transform data (loop over target and features)
     for c,col in enumerate([target]+features):
         tf  = trafos[c].split('-')
@@ -216,6 +218,9 @@ def data_framer(data,target,features='all',index=None,start_i=None,end_i=None,sh
                 raise ValueError('Feature index shift or transformation led to negative index.')
             data_slice         = np.array(data[col][iS-t-shift:iE-shift+1])
             data_new[col_name] = data_transformer(data_slice,trafos[c],power[c])
+    print("------")
+    print(data_new)
+    print("------")
     if drop_missing==True:
         data_new = data_new.dropna()
     # write new data to file
